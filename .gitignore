@@ -1,0 +1,15 @@
+# Terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+terraform/environments/dev/terraform.tfvars
+
+# Keys / credentials
+*.pem
+*.key
+
+# Ansible
+inventory.ini
+
+# Misc
+awscliv2.zip

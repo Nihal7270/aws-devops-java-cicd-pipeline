@@ -1,0 +1,56 @@
+- name: Install and start Tomcat on app servers
+  hosts: tomcat
+  become: yes
+
+  vars:
+    tomcat_version: "9.0.117"
+    tomcat_tar: "apache-tomcat-9.0.117.tar.gz"
+    tomcat_url: "https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.117/bin/apache-tomcat-9.0.117.tar.gz"
+    tomcat_parent_dir: "/opt"
+    tomcat_dir: "/opt/tomcat"
+
+  tasks:
+    - name: Install Java and wget
+      yum:
+        name:
+          - java-17-amazon-corretto
+          - wget
+        state: present
+
+    - name: Remove old Tomcat directory if exists
+      file:
+        path: "{{ tomcat_dir }}"
+        state: absent
+
+    - name: Remove old extracted Tomcat version directory if exists
+      file:
+        path: "{{ tomcat_parent_dir }}/apache-tomcat-{{ tomcat_version }}"
+        state: absent
+
+    - name: Download Tomcat archive
+      get_url:
+        url: "{{ tomcat_url }}"
+        dest: "/tmp/{{ tomcat_tar }}"
+        mode: '0644'
+
+    - name: Extract Tomcat archive into /opt
+      unarchive:
+        src: "/tmp/{{ tomcat_tar }}"
+        dest: "{{ tomcat_parent_dir }}"
+        remote_src: yes
+
+    - name: Rename extracted Tomcat directory to /opt/tomcat
+      command: mv "{{ tomcat_parent_dir }}/apache-tomcat-{{ tomcat_version }}" "{{ tomcat_dir }}"
+      args:
+        creates: "{{ tomcat_dir }}"
+
+    - name: Give execute permission to Tomcat scripts
+      shell: chmod +x {{ tomcat_dir }}/bin/*.sh
+
+    - name: Kill old Tomcat if running
+      shell: "pkill -f tomcat || true"
+      ignore_errors: yes
+
+    - name: Start Tomcat
+      shell: "nohup {{ tomcat_dir }}/bin/startup.sh > /dev/null 2>&1 &"
+
