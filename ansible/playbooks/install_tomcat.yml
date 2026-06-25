@@ -1,122 +1,30 @@
----
-- name: Install and configure Tomcat on application servers
-  hosts: tomcat
-  become: yes
-
-  vars:
-    tomcat_version: "9.0.117"
-    tomcat_url: "https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.117/bin/apache-tomcat-9.0.117.tar.gz"
-    tomcat_install_dir: "/opt/tomcat"
-
+- hosts: all
   tasks:
-    - name: Install Java 17 and required packages
-      yum:
-        name:
-          - java-17-amazon-corretto
-          - wget
-        state: present
-
-    - name: Create tomcat group
-      group:
-        name: tomcat
-        state: present
-
-    - name: Create tomcat user
-      user:
-        name: tomcat
-        group: tomcat
-        shell: /sbin/nologin
-        home: "{{ tomcat_install_dir }}"
-        create_home: no
-        state: present
-
-    - name: Remove old Tomcat installation if present
-      file:
-        path: "{{ tomcat_install_dir }}"
-        state: absent
-
-    - name: Create Tomcat installation directory
-      file:
-        path: "{{ tomcat_install_dir }}"
-        state: directory
-        owner: tomcat
-        group: tomcat
-        mode: '0755'
-
-    - name: Download Tomcat archive
+    - name: download tomcat from dlcdn
       get_url:
-        url: "{{ tomcat_url }}"
-        dest: /tmp/apache-tomcat.tar.gz
-        mode: '0644'
+        url: "https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.117/bin/apache-tomcat-9.0.117.tar.gz"
+        dest: "/root/"
 
-    - name: Extract Tomcat archive
-      unarchive:
-        src: /tmp/apache-tomcat.tar.gz
-        dest: "{{ tomcat_install_dir }}"
-        remote_src: yes
-        extra_opts: [--strip-components=1]
+    - name: untar the apache file
+      command: tar -zxvf apache-tomcat-9.0.117.tar.gz
 
-    - name: Set ownership on Tomcat directory recursively
-      file:
-        path: "{{ tomcat_install_dir }}"
-        state: directory
-        recurse: yes
-        owner: tomcat
-        group: tomcat
 
-    - name: Ensure Tomcat shell scripts are executable
-      shell: chmod +x {{ tomcat_install_dir }}/bin/*.sh
+    - name: rename the tomcat
+      command: mv apache-tomcat-9.0.117 tomcat
+      tags: abc
 
-    - name: Ensure bin directory has correct permissions
-      file:
-        path: "{{ tomcat_install_dir }}/bin"
-        state: directory
-        recurse: yes
-        mode: '0755'
+    - name: install java
+      command: yum install java-1.8.0-openjdk -y
 
-    - name: Create Tomcat systemd service file
-      copy:
-        dest: /etc/systemd/system/tomcat.service
-        mode: '0644'
-        content: |
-          [Unit]
-          Description=Apache Tomcat Web Application Container
-          After=network.target
+    - name: setting the roles in tomcat-user.xml file
+      template:
+        src: tomcat-users.xml
+        dest: /root/tomcat/conf/tomcat-users.xml
 
-          [Service]
-          Type=forking
+    - name: delete two lines in context.xml
+      template:
+        src: context.xml
+        dest: /root/tomcat/webapps/manager/META-INF/context.xml
 
-          User=tomcat
-          Group=tomcat
-
-          Environment=JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto.x86_64
-          Environment=CATALINA_PID={{ tomcat_install_dir }}/temp/tomcat.pid
-          Environment=CATALINA_HOME={{ tomcat_install_dir }}
-          Environment=CATALINA_BASE={{ tomcat_install_dir }}
-          Environment='CATALINA_OPTS=-Xms256M -Xmx512M -server -XX:+UseParallelGC'
-          Environment='JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom'
-
-          ExecStart={{ tomcat_install_dir }}/bin/startup.sh
-          ExecStop={{ tomcat_install_dir }}/bin/shutdown.sh
-
-          RestartSec=10
-          Restart=always
-
-          [Install]
-          WantedBy=multi-user.target
-
-    - name: Reload systemd
-      systemd:
-        daemon_reload: yes
-
-    - name: Restart Tomcat
-      systemd:
-        name: tomcat
-        enabled: yes
-        state: restarted
-
-    - name: Wait for Tomcat to start
-      wait_for:
-        port: 8080
-        delay: 5
-        timeout: 60
+    - name: start the tomcat
+      shell: nohup /root/tomcat/bin/startup.sh
