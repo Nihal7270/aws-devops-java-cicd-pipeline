@@ -1,0 +1,43 @@
+pipeline {
+    agent any
+    tools {
+        maven 'maven'
+    }
+    environment {
+        AWS_ACCESS_KEY_ID = credentials('accesskey')
+        AWS_SECRET_ACCESS_KEY = credentials('secretkey')
+    }
+
+    stages {
+        stage('checkout') {
+            steps {
+                git branch: 'master', url: 'https://github.com/Nihal7270/jenkins-java-project.git'
+            }
+        }
+        stage('build') {
+            steps {
+                sh 'mvn compile'
+            }
+        }
+        stage('test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+        stage('artifact') {
+            steps {
+                sh 'mvn package'
+            }
+        }
+        stage('S3') {
+            steps {
+                sh 'aws s3 cp target/NETFLIX-1.2.2.war s3://nihal-aws-devops-cicd-artifacts-2026'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'sudo ansible-playbook /opt/tomcat/ansible-cicd/playbooks/deploy_war.yml'
+            }
+        }
+    }
+}
