@@ -1,0 +1,10 @@
+#Install these packages to continue using jenkins
+yum update
+yum install git -y
+git --version
+
+yum install maven -y
+mvn --version
+
+aws configure
+#Give AWS credentials or use IAM Role
