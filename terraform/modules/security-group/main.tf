@@ -75,8 +75,24 @@ resource "aws_security_group" "tomcat_sg" {
     description     = "Allow SSH from Jenkins server"
     from_port       = 22
     to_port         = 22
-    protocol        = "tcp"
+    protocol        = "ssh"
     security_groups = [aws_security_group.jenkins_sg.id]
+  }
+
+  ingress {
+    description = "Allow anywhere IPv4"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "ssh"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "Allow anywhere IPv4"
+    from_port   = 8080
+    to_port     = 8080
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
