@@ -223,81 +223,46 @@ Prometheus + Grafana Monitoring
 - [x] Grafana Dashboard
 - [x] Infrastructure Monitoring
 
----
+<details>
+<summary><b>📸 View Project Screenshots</b></summary>
 
-# 📸 Project Screenshots
+### Architecture
+<img src="docs/12-project-architecture.png">
 
-## Architecture Diagram
+### Terraform Project Structure
+<img src="docs/01-terraform-project-structure.png">
 
-<img src="docs/screenshots/12-project-architecture.png">
+### Terraform Apply
+<img src="docs/02-terraform-apply-output.png">
 
----
+### EC2 Instances
+<img src="docs/03-ec2-instances-running.png">
 
-## Terraform Project Structure
+### VPC
+<img src="docs/04-vpc-network-setup.png">
 
-<img src="docs/screenshots/01-terraform-project-structure.png">
+### S3 Bucket
+<img src="docs/05-s3-artifact-bucket.png">
 
----
+### Application Load Balancer
+<img src="docs/06-alb-created.png">
 
-## Terraform Infrastructure Deployment
+### Jenkins Pipeline
+<img src="docs/07-jenkins-pipeline-success.png">
 
-<img src="docs/screenshots/02-terraform-apply-output.png">
+### Ansible Deployment
+<img src="docs/08-ansible-deploy-success.png">
 
----
+### Application via ALB
+<img src="docs/09-application-via-alb.png">
 
-## EC2 Instances
+### Grafana Dashboard
+<img src="docs/10-grafana-dashboard.png">
 
-<img src="docs/screenshots/03-ec2-instances-running.png">
+### Prometheus Targets
+<img src="docs/11-prometheus-targets.png">
 
----
-
-## VPC Network
-
-<img src="docs/screenshots/04-vpc-network-setup.png">
-
----
-
-## Amazon S3 Artifact Bucket
-
-<img src="docs/screenshots/05-s3-artifact-bucket.png">
-
----
-
-## Application Load Balancer
-
-<img src="docs/screenshots/06-alb-created.png">
-
----
-
-## Jenkins Pipeline
-
-<img src="docs/screenshots/07-jenkins-pipeline-success.png">
-
----
-
-## Ansible Deployment
-
-<img src="docs/screenshots/08-ansible-deploy-success.png">
-
----
-
-## Application Running via ALB
-
-<img src="docs/screenshots/09-application-via-alb.png">
-
----
-
-## Grafana Dashboard
-
-<img src="docs/screenshots/10-grafana-dashboard.png">
-
----
-
-## Prometheus Targets
-
-<img src="docs/screenshots/11-prometheus-targets.png">
-
----
+</details>
 
 # 🐞 Challenges & Learning
 
