@@ -1,7 +1,7 @@
 # 🚀 End-to-End AWS DevOps CI/CD Pipeline for Java WAR Application
 
 <p align="center">
-  <img src="docs/screenshots/12-project-architecture.png" alt="Project Architecture" width="100%">
+  <img src="./docs/12-project-architecture.png" alt="Project Architecture" width="100%">
 </p>
 
 <p align="center">
@@ -23,23 +23,22 @@
 
 # 📌 Project Overview
 
-This project demonstrates an **end-to-end DevOps CI/CD pipeline** for deploying a **Java WAR-based web application** on AWS.
+This project demonstrates an end-to-end DevOps CI/CD pipeline for deploying a Java WAR application on AWS.
 
-The entire workflow is automated—from provisioning AWS infrastructure to building, storing, deploying, load balancing, and monitoring the application—using Infrastructure as Code (IaC) and DevOps automation tools.
+The workflow automates infrastructure provisioning, application build, artifact storage, deployment, load balancing, and monitoring using Infrastructure as Code (IaC) and DevOps automation tools.
 
-The project integrates **Terraform**, **Jenkins**, **Maven**, **Ansible**, **Amazon S3**, **Application Load Balancer (ALB)**, **Prometheus**, and **Grafana** into a single automated deployment pipeline.
+The pipeline integrates Terraform, Jenkins, Maven, Ansible, Amazon S3, Application Load Balancer (ALB), Prometheus, and Grafana into a complete deployment workflow.
 
 ---
 
 # 🎯 Project Objectives
 
 - Provision AWS infrastructure using Terraform
-- Automate infrastructure deployment using reusable Terraform modules
 - Configure Jenkins as the CI/CD server
 - Build Java WAR applications using Maven
 - Store build artifacts in Amazon S3
-- Automate deployment using Ansible
-- Deploy applications to multiple Apache Tomcat servers
+- Automate application deployment using Ansible
+- Deploy the application on multiple Apache Tomcat servers
 - Distribute traffic using AWS Application Load Balancer
 - Monitor infrastructure using Prometheus and Grafana
 
@@ -48,7 +47,7 @@ The project integrates **Terraform**, **Jenkins**, **Maven**, **Ansible**, **Ama
 # 🏗 Project Architecture
 
 <p align="center">
-<img src="docs/screenshots/12-project-architecture.png" width="100%">
+<img src="./docs/12-project-architecture.png" width="100%">
 </p>
 
 ---
@@ -72,7 +71,7 @@ The project integrates **Terraform**, **Jenkins**, **Maven**, **Ansible**, **Ama
 
 # ☁️ AWS Infrastructure
 
-The infrastructure is provisioned entirely using Terraform modules.
+The infrastructure is provisioned using reusable Terraform modules.
 
 ### Network
 
@@ -113,28 +112,27 @@ The infrastructure is provisioned entirely using Terraform modules.
 ```text
 aws-devops-java-cicd-pipeline
 │
-├── terraform
-│   ├── environments
-│   │   └── dev
-│   └── modules
-│       ├── vpc
-│       ├── security-group
-│       ├── ec2
-│       ├── s3
-│       └── alb
-│
 ├── ansible
 │   ├── inventory
 │   └── playbooks
 │
+├── docs
+│   ├── project screenshots
+│
 ├── jenkins
 │   ├── Jenkinsfile
-│   └── scripts
+│   └── jenkins.sh
 │
 ├── monitoring
 │
-├── docs
-│   └── screenshots
+├── terraform
+│   ├── environments
+│   └── modules
+│       ├── alb
+│       ├── ec2
+│       ├── s3
+│       ├── security-group
+│       └── vpc
 │
 └── README.md
 ```
@@ -156,16 +154,16 @@ Jenkins Pipeline
 Checkout Source Code
       │
       ▼
-Build WAR (Maven)
+Build WAR using Maven
       │
       ▼
-Upload Artifact to Amazon S3
+Upload WAR Artifact to Amazon S3
       │
       ▼
-Ansible Playbook
+Execute Ansible Playbook
       │
       ▼
-Deploy WAR to Tomcat Servers
+Deploy WAR to Apache Tomcat Servers
       │
       ▼
 Application Load Balancer
@@ -179,107 +177,142 @@ Prometheus + Grafana Monitoring
 
 ---
 
-# ✅ Project Status
+# ✅ Project Features
 
-## Infrastructure Provisioning
+### Infrastructure Provisioning
 
-- [x] Modular Terraform Project Structure
-- [x] AWS VPC
-- [x] Public Subnets
-- [x] Internet Gateway
-- [x] Route Tables
-- [x] Security Groups
-- [x] EC2 Instances
-- [x] Amazon S3 Bucket
-- [x] Application Load Balancer
+- ✅ Modular Terraform Project
+- ✅ AWS VPC
+- ✅ Public Subnets
+- ✅ Internet Gateway
+- ✅ Route Tables
+- ✅ Security Groups
+- ✅ EC2 Instances
+- ✅ Amazon S3 Bucket
+- ✅ Application Load Balancer
 
-## CI/CD Pipeline
+### CI/CD Pipeline
 
-- [x] Jenkins Installation
-- [x] Git Integration
-- [x] Maven Build Automation
-- [x] Jenkins Pipeline
-- [x] WAR Artifact Generation
-- [x] Upload WAR Artifact to Amazon S3
+- ✅ Jenkins Installation
+- ✅ GitHub Integration
+- ✅ Maven Build Automation
+- ✅ Jenkins Pipeline
+- ✅ WAR Artifact Generation
+- ✅ Upload Artifact to Amazon S3
 
-## Configuration Management
+### Configuration Management
 
-- [x] SSH Configuration
-- [x] Ansible Inventory
-- [x] Automated Apache Tomcat Installation
-- [x] Automated WAR Deployment
-- [x] Multi-Server Deployment
+- ✅ SSH Configuration
+- ✅ Ansible Inventory
+- ✅ Automated Apache Tomcat Installation
+- ✅ Automated WAR Deployment
+- ✅ Multi-Server Deployment
 
-## Application Deployment
+### Application Deployment
 
-- [x] Java WAR Application Deployment
-- [x] Load Balancing Across Two Tomcat Servers
-- [x] Application Accessible Through ALB
+- ✅ Java WAR Application Deployment
+- ✅ Load Balancing Across Two Tomcat Servers
+- ✅ Application Accessible Through ALB
 
-## Monitoring
+### Monitoring
 
-- [x] Prometheus Installation
-- [x] Node Exporter Configuration
-- [x] Grafana Dashboard
-- [x] Infrastructure Monitoring
+- ✅ Prometheus Installation
+- ✅ Node Exporter Configuration
+- ✅ Grafana Dashboard
+- ✅ Infrastructure Monitoring
 
-<details>
-<summary><b>📸 View Project Screenshots</b></summary>
+---
 
-### Architecture
-<img src="docs/12-project-architecture.png">
+# 📸 Project Screenshots
 
-### Terraform Project Structure
-<img src="docs/01-terraform-project-structure.png">
+## Project Architecture
 
-### Terraform Apply
-<img src="docs/02-terraform-apply-output.png">
+<img src="./docs/12-project-architecture.png">
 
-### EC2 Instances
-<img src="docs/03-ec2-instances-running.png">
+---
 
-### VPC
-<img src="docs/04-vpc-network-setup.png">
+## Terraform Project Structure
 
-### S3 Bucket
-<img src="docs/05-s3-artifact-bucket.png">
+<img src="./docs/01-terraform-project-structure.png">
 
-### Application Load Balancer
-<img src="docs/06-alb-created.png">
+---
 
-### Jenkins Pipeline
-<img src="docs/07-jenkins-pipeline-success.png">
+## Terraform Infrastructure Deployment
 
-### Ansible Deployment
-<img src="docs/08-ansible-deploy-success.png">
+<img src="./docs/02-terraform-apply-output.png">
 
-### Application via ALB
-<img src="docs/09-application-via-alb.png">
+---
 
-### Grafana Dashboard
-<img src="docs/10-grafana-dashboard.png">
+## EC2 Instances
 
-### Prometheus Targets
-<img src="docs/11-prometheus-targets.png">
+<img src="./docs/03-ec2-instances-running.png">
 
-</details>
+---
+
+## VPC Network Setup
+
+<img src="./docs/04-vpc-network-setup.png">
+
+---
+
+## Amazon S3 Artifact Bucket
+
+<img src="./docs/05-s3-artifact-bucket.png">
+
+---
+
+## Application Load Balancer
+
+<img src="./docs/06-alb-created.png">
+
+---
+
+## Jenkins Pipeline
+
+<img src="./docs/07-jenkins-pipeline-success.png">
+
+---
+
+## Ansible Deployment
+
+<img src="./docs/08-ansible-deploy-success.png">
+
+---
+
+## Application Running Through ALB
+
+<img src="./docs/09-application-via-alb.png">
+
+---
+
+## Grafana Dashboard
+
+<img src="./docs/10-grafana-dashboard.png">
+
+---
+
+## Prometheus Targets
+
+<img src="./docs/11-prometheus-targets.png">
+
+---
 
 # 🐞 Challenges & Learning
 
-Working on this project provided practical experience in building a complete DevOps workflow and solving real-world deployment challenges.
+During this project, I gained hands-on experience in building and automating a complete DevOps deployment workflow.
 
-Some key takeaways include:
+Some key learning outcomes include:
 
-- Designing reusable Terraform modules for better scalability and maintainability.
+- Designing reusable Terraform modules for scalable infrastructure.
 - Configuring secure communication between Jenkins, Tomcat servers, Monitoring server, and the Application Load Balancer.
 - Integrating GitHub, Jenkins, Maven, Amazon S3, and Ansible into a complete CI/CD pipeline.
-- Automating Apache Tomcat installation and WAR deployment using Ansible playbooks.
-- Configuring Application Load Balancer target groups and health checks.
-- Setting up Prometheus and Node Exporter to collect infrastructure metrics.
-- Building Grafana dashboards to visualize system performance.
-- Troubleshooting Jenkins pipeline failures, SSH connectivity issues, ALB health checks, deployment errors, and monitoring configuration.
+- Automating Apache Tomcat installation and WAR deployment using Ansible.
+- Configuring ALB target groups and health checks.
+- Setting up Prometheus with Node Exporter to collect infrastructure metrics.
+- Building Grafana dashboards for infrastructure monitoring.
+- Troubleshooting Jenkins pipeline failures, SSH connectivity issues, deployment errors, ALB health checks, and monitoring configuration.
 
-This project significantly improved my understanding of how modern DevOps tools work together in a production-like deployment workflow.
+This project helped me understand how multiple DevOps tools work together in a real-world deployment pipeline.
 
 ---
 
@@ -287,7 +320,7 @@ This project significantly improved my understanding of how modern DevOps tools 
 
 - Configure HTTPS using AWS Certificate Manager (ACM)
 - Integrate Amazon Route 53
-- Provision Terraform Remote Backend using Amazon S3 and DynamoDB
+- Configure Terraform Remote Backend using Amazon S3 and DynamoDB
 - Implement Auto Scaling Group (ASG)
 - Store application secrets using AWS Secrets Manager
 - Implement Blue-Green Deployment Strategy
